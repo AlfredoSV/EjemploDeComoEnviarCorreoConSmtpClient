@@ -21,19 +21,26 @@ namespace EjemploDeEnvioCorreo
         {
             try
             {
+                using (var mail = new MailMessage())
+                {
+                    using (var SmtpServer = new SmtpClient("smtp.gmail.com"))
+                    {
+                        mail.From = new MailAddress("");
+                        mail.To.Add("");
+                        mail.Subject = "Hola";
+                        mail.Body = "<h1>Bienvenido<h1>";
+                        mail.IsBodyHtml = true;
+                        SmtpServer.Port = 587;
+                        SmtpServer.UseDefaultCredentials = false;
+                        SmtpServer.Credentials = new System.Net.NetworkCredential("", "");
+
+                        SmtpServer.EnableSsl = true;
+                        SmtpServer.Send(mail);
+                    }
+                     
+                }
                 
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("");
-                mail.From = new MailAddress("");
-                mail.To.Add("");
-                mail.Subject = "";
-                mail.Body = "<p><p>";
-                mail.IsBodyHtml = true;
-                SmtpServer.Port = 465;
-       
-                SmtpServer.Credentials = new System.Net.NetworkCredential("", "");
-                SmtpServer.EnableSsl = false;
-                SmtpServer.Send(mail);
+                
             }
             catch (Exception e)
             {
